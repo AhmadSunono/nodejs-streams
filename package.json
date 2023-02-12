@@ -1,0 +1,24 @@
+{
+  "name": "nodejs-streams",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AhmadSunono/nodejs-streams.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AhmadSunono/nodejs-streams/issues"
+  },
+  "homepage": "https://github.com/AhmadSunono/nodejs-streams#readme",
+  "dependencies": {
+    "inquirer": "^9.1.4",
+    "save": "^2.9.0"
+  }
+}
