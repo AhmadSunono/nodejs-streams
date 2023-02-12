@@ -8,7 +8,7 @@ This project is mainly an application for nodejs streams. But then I decided to 
 
 All you need to setup this project is to run `npm i` on the main directory to install needed packages.
 
-## interactive cli
+## Interactive cli
 
 To run the **interactive** cli, run the command
 
