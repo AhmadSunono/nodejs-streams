@@ -1,85 +1,22 @@
-#!/usr/bin/env node
+import fs from "fs";
+import readline from "readline";
+import stream from "stream";
+import { COMMANDS } from "../constants/commands.js";
+const Transform = stream.Transform;
 
-const fs = require("fs");
-const readline = require("readline");
-const stream = require("stream");
-const Transform = stream.Transform || require("readable-stream").Transform;
-
-const args = process.argv;
-const commands = ["read", "write", "copy", "upperCase"];
-
-const getHelpText = function () {
-  const helpText = `
-    streams-program is a simple cli program to demonstrate how to handle files using streams.
-    usage:
-        streams-program <command> <path_to_file>
-
-        <command> can be:
-        read: Print a file's contents to the terminal
-        write: Write a message from the terminal to a file
-        copy: Create a copy of a file in the current directory
-        upperCase: Transform the content of a file into upper case and save its output to another file.
-
-        <path_to_file> is the path to the file you want to work with.
-    `;
-  console.log(helpText);
-};
-
-let command = "";
-
-if (args.length < 3) {
-  getHelpText();
-  return;
-} else if (args.length > 4) {
-  console.log("More arguments provided than expected");
-  getHelpText();
-  return;
-} else {
-  command = args[2];
-  if (!args[3]) {
-    console.log("This tool requires at least one path to a file");
-    getHelpText();
-    return;
-  }
-}
-
-let handler;
-
-switch (command) {
-  case commands[0]:
-    handler = read;
-    break;
-  case commands[1]:
-    handler = write;
-    break;
-  case commands[2]:
-    handler = copy;
-    break;
-  case commands[3]:
-    handler = upper;
-    break;
-  default:
-    console.log(
-      "You entered a wrong command. See help text below for supported functions"
-    );
-    getHelpText();
-    return;
-}
-handler(args[3]);
-
-function read(filePath) {
+export const read = (filePath) => {
   const readableStream = fs.createReadStream(filePath, "utf8");
 
-  readableStream.on("error", function (error) {
+  readableStream.on("error", (error) => {
     console.log(`error: ${error.message}`);
   });
 
   readableStream.on("data", (chunk) => {
     console.log(chunk);
   });
-}
+};
 
-function write(filePath) {
+export const write = (filePath) => {
   const writableStream = fs.createWriteStream(filePath);
 
   writableStream.on("error", (error) => {
@@ -116,9 +53,9 @@ function write(filePath) {
       process.exit(0);
     }, 100);
   });
-}
+};
 
-function copy(filePath) {
+export const copy = (filePath) => {
   const inputStream = fs.createReadStream(filePath);
   const fileCopyPath =
     filePath.split(".")[0] + "-copy." + filePath.split(".")[1];
@@ -131,16 +68,16 @@ function copy(filePath) {
       `You have successfully created a ${filePath} copy. The new file name is ${fileCopyPath}.`
     );
   });
-}
+};
 
-function upper(filePath) {
+export const upper = (filePath) => {
   const readStream = fs.createReadStream(filePath);
   const upperDataFilePath =
     filePath.split(".")[0] + "-upper-case." + filePath.split(".")[1];
   const writeStream = fs.createWriteStream(upperDataFilePath);
 
   const upperStream = new Transform({
-    transform(chunk, encoding, next) {
+    transform(chunk, _encoding, next) {
       const upperChunk = chunk.toString().toUpperCase();
       this.push(upperChunk);
       next();
@@ -155,4 +92,11 @@ function upper(filePath) {
         `Finished transforming the contents of ${filePath} to upper case, and saving the output to ${upperDataFilePath}.`
       );
     });
-}
+};
+
+export const commandHandlerMapper = {
+  [COMMANDS[0]]: read,
+  [COMMANDS[1]]: write,
+  [COMMANDS[2]]: copy,
+  [COMMANDS[3]]: upper,
+};

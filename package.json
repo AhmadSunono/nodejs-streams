@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node interactive-cli-streams-program.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,12 @@
   },
   "homepage": "https://github.com/AhmadSunono/nodejs-streams#readme",
   "dependencies": {
+    "chalk": "^5.2.0",
+    "chalk-animation": "^2.0.3",
+    "cli-welcome": "^2.2.2",
+    "figlet": "^1.5.2",
     "inquirer": "^9.1.4",
+    "nodemon": "^2.0.20",
     "save": "^2.9.0"
   }
 }
