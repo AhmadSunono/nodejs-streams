@@ -1,8 +1,8 @@
 export const getHelpText = () => {
   const helpText = `
-    streams-program is a simple cli program to demonstrate how to handle files using streams.
+    cli-streams-program is a simple cli program to demonstrate how to handle files using streams.
     usage:
-        streams-program <command> <path_to_file>
+        cli-streams-program <command> <path_to_file>
 
         <command> can be:
         read: Print a file's contents to the terminal
